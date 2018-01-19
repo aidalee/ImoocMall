@@ -10,12 +10,16 @@
           <div class="filter-nav">
             <span class="sortby">Sort by:</span>
             <a href="javascript:;" class="default cur">Default</a>
+            <!-- 价格排序箭头 -->
             <a href="javascript:;" class="price sort-up" @click="sortGoods">
               Price
               <svg class="icon icon-arrow-short" v-bind:class="{'sort-up':!sortFlag}">
-                <use xlink:href="#icon-arrow-short"></use>
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-short">
+                  <svg id="icon-arrow-short" viewBox="0 0 25 32" width="100%" height="100%"><title>arrow-short</title> <path d="M24.487 18.922l-1.948-1.948-8.904 8.904v-25.878h-2.783v25.878l-8.904-8.904-1.948 1.948 12.243 12.243z" class="path1"></path></svg>
+                </use>
               </svg>
             </a>
+
             <a href="javascript:;" class="filterby stopPop" @click="showFilterPop">Filter by</a>
           </div>
           <div class="accessory-result">
@@ -24,7 +28,9 @@
                 <div id="filter" class="filter stopPop" v-bind:class="{'filterby-show':filterBy}">
                   <dl class="filter-price">
                     <dt>Price:</dt>
-                    <dd><a href="javascript:;" v-bind:class="{'cur':priceChecked=='all'}" @click="priceChecked=='all'">All</a></dd>
+                    <dd>
+                      <a href="javascript:;" v-bind:class="{'cur':priceChecked=='all'}" @click="priceChecked=='all'">All</a>
+                    </dd>
                     <dd v-for="(price,index) in priceFilter">
                       <a href="javascript:;" v-bind:class="{'cur':priceChecked==index}" @click="setPriceFilter(index)">{{price.startPrice}} - {{price.endPrice}}</a>
                     </dd>
@@ -204,6 +210,7 @@
         this.priceChecked = index;
         this.page = 1;
         this.getGoodsList();
+        this.closePop();
       },
       loadMore(){
         this.busy = true;
@@ -232,10 +239,6 @@
       showFilterPop(){
         this.filterBy = true;
         this.overLayFlag = true;
-      },
-      setPriceFilter(index){
-        this.priceChecked = index;
-        this.closePop();
       },
       closePop(){
         this.filterBy = false;
